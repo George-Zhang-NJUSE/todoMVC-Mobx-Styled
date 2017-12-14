@@ -3,6 +3,7 @@ import { AddTodo } from './AddTodo';
 import { TodoList } from './TodoList';
 import { ControlPane } from './ControlPane';
 import styled from 'styled-components';
+// import DevTools from 'mobx-react-devtools';
 
 class App extends React.Component {
     render() {
@@ -14,6 +15,7 @@ class App extends React.Component {
                     <TodoList />
                     <ControlPane />
                 </AppContainer>
+                {/* <DevTools /> */}
             </RootContainer>
         );
     }
@@ -28,6 +30,8 @@ const RootContainer = styled.div`
 const AppContainer = styled.div`
     background: white;
     width: 600px;
+    border-radius: 4px;
+    box-shadow: 2px 2px 20px 5px #d1d1d1;
 `;
 
 const Title = styled.header`

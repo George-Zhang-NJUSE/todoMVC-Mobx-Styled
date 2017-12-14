@@ -62,7 +62,7 @@ class Store {
     }
 
     @action deleteTodo(id: number) {
-        this.todos.splice(this.todos.findIndex(todo => todo.id === id));
+        this.todos.splice(this.todos.findIndex(todo => todo.id === id), 1);
     }
 
     @action toggleTodo(id: number) {

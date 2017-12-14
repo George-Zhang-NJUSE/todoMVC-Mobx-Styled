@@ -2,8 +2,7 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { StoreProps, Todo, storeInjector } from '../stores/store';
 import styled, { css } from 'styled-components';
-
-const checkLogo = require('./check.svg');
+import { Check } from './Check/Check';
 
 type TodoItemProps = {
     todo: Todo
@@ -26,19 +25,18 @@ export class TodoItem extends React.Component<TodoItemProps> {
 const HoverItem = styled.li`
     width: 100%;
     height: 60px;
+    border-bottom: 1px solid #f1f1f1;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    > button {
+        opacity: 0;
+    }
 
-    /* &:hover {
-        button {
-            
+    &:hover {
+        > button {
+           opacity: 1; 
         }
-    } */
-`;
-
-const Check = styled.input.attrs({ type: 'checkbox' }) `
-    width: 40px;
-    height: 40px;
-    &:checked > *::after {
-        content: url(${checkLogo})
     }
 `;
 
@@ -48,6 +46,7 @@ type CrossableSpanProps = {
 
 const CrossableSpan = styled.span`
     transition: all 0.3s;
+    font-size: 1.2rem;
 
     ${(props: CrossableSpanProps) => props.isCrossed ? css`
         text-decoration: line-through;
@@ -59,8 +58,12 @@ const HoverButton = styled.button`
     width: 40px;
     height: 40px;
     color: #cc9a9a;
-    font-size: 1.2rem;
-    
+    font-size: 2rem;
+    margin-left: auto;
+    background: transparent;
+    border: none;
+    transition: all 0.3s;
+
     &:hover {
         color: #af5b5e;;
     }

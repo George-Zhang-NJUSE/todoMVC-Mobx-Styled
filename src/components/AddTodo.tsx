@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import { StoreProps, storeInjector } from '../stores/store';
 import { ChangeEvent, FormEvent } from 'react';
 import styled, { css } from 'styled-components';
+import { Check } from './Check/Check';
 
 type State = {
     content: string
@@ -52,27 +53,31 @@ export class AddTodo extends React.Component<StoreProps, State> {
 }
 
 const Form = styled.form`
-    
+    display: flex;
+    flex-flow: row nowrap;
+    height: 60px;
+    align-items: center;
+    border-bottom: 1px solid #f1f1f1;
 `;
 
 const TextInput = styled.input.attrs({ type: 'text' }) `
     width: 100%;
-    height: 60px;
+    height: 100%;
+    font-size: 1.5rem;
+    background: transparent;
+    border: none;
+
+    &::-webkit-input-placeholder {
+        color: #d1d1d1;
+    }
 `;
 
 type ToggleAllProps = {
     isHidden: boolean
 };
 
-const ToggleAll = styled.input.attrs({ type: 'checkbox' }) `
-    width: 40px;
-    height: 40px;
-    border: hidden;
-    &:hover{
-        background: #f1f1f1; 
-    }
-
-    ${(props: ToggleAllProps) => props.isHidden ? '' : css`
+const ToggleAll = Check.extend`
+    ${(props: ToggleAllProps) => props.isHidden ? css`
         visibility: hidden;
-    `}
+    ` : ''}
 `;
