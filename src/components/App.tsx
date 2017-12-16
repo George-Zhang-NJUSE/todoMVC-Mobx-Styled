@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AddTodo } from './AddTodo';
-import { TodoList } from './TodoList';
+import { TodoList } from './TodoList/TodoList';
 import { ControlPane } from './ControlPane';
 import styled from 'styled-components';
 // import DevTools from 'mobx-react-devtools';
