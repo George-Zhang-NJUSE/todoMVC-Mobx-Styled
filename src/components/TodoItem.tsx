@@ -8,19 +8,48 @@ type TodoItemProps = {
     todo: Todo
 } & StoreProps;
 
+type TodoItemState = {
+    animationName: string
+};
+
 @inject(storeInjector) @observer
-export class TodoItem extends React.Component<TodoItemProps> {
+export class TodoItem extends React.Component<TodoItemProps, TodoItemState> {
+
+    state: TodoItemState = {
+        animationName: 'enter'
+    };
+
+    deleteSelf = () => {
+        const { store, todo } = this.props;
+        store!.deleteTodo(todo.id);
+    }
+
+    handleAnimationEnd = () => {
+        const { animationName } = this.state;
+        if (animationName === 'leave') {
+            this.deleteSelf();
+        }
+    }
+
+    handleDeleteClick = () => {
+        this.setState({ animationName: 'leave' });
+    }
+
     render() {
         const { store, todo } = this.props;
         return (
-            <HoverItem>
+            <HoverItem onAnimationEnd={this.handleAnimationEnd} animation={this.state.animationName}>
                 <Check checked={todo.isCompleted} onChange={() => store!.toggleTodo(todo.id)} />
                 <CrossableSpan isCrossed={todo.isCompleted}>{todo.content}</CrossableSpan>
-                <HoverButton onClick={() => store!.deleteTodo(todo.id)}>×</HoverButton>
+                <HoverButton onClick={this.handleDeleteClick}>×</HoverButton>
             </HoverItem>
         );
     }
 }
+
+type HoverItemProps = {
+    animation: string
+};
 
 const HoverItem = styled.li`
     width: 100%;
@@ -29,6 +58,8 @@ const HoverItem = styled.li`
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
+    animation: ${(props: HoverItemProps) => props.animation} 0.3s ease-out;
+
     > button {
         opacity: 0;
     }
@@ -38,6 +69,29 @@ const HoverItem = styled.li`
            opacity: 1; 
         }
     }
+
+    @keyframes enter {
+        from {
+            height: 0;
+            opacity: 0;
+        }
+        to {
+            height: 60px;
+            opacity: 1;
+        }
+    }
+
+    @keyframes leave {
+        from {
+            height: 60px;
+            opacity: 1;
+        }
+        to {
+            height: 0;
+            opacity: 0;
+        }
+    }
+
 `;
 
 type CrossableSpanProps = {

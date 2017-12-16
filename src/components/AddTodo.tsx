@@ -18,8 +18,11 @@ export class AddTodo extends React.Component<StoreProps, State> {
 
     handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        this.props.store!.addTodo(this.state.content);
-        this.setState({ content: '' });
+        const content = this.state.content.trim();
+        if (content) {
+            this.props.store!.addTodo(this.state.content);
+            this.setState({ content: '' }); 
+        }
     }
 
     handleTextChange = (event: ChangeEvent<HTMLInputElement>) => {
